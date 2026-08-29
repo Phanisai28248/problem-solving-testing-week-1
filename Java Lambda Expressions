@@ -1,0 +1,92 @@
+import java.io.*;
+import java.util.*;
+
+interface PerformOperation {
+    boolean check(int a);
+}
+
+class MyMath {
+
+    public boolean checker(PerformOperation p, int num) {
+        return p.check(num);
+    }
+
+    // Check Odd
+    public PerformOperation isOdd() {
+        return (a) -> a % 2 != 0;
+    }
+
+    // Check Prime
+    public PerformOperation isPrime() {
+        return (a) -> {
+            if (a < 2) {
+                return false;
+            }
+
+            for (int i = 2; i * i <= a; i++) {
+                if (a % i == 0) {
+                    return false;
+                }
+            }
+
+            return true;
+        };
+    }
+
+    // Check Palindrome
+    public PerformOperation isPalindrome() {
+        return (a) -> {
+            String s = String.valueOf(a);
+            String rev = new StringBuilder(s).reverse().toString();
+
+            return s.equals(rev);
+        };
+    }
+}
+
+public class Solution {
+
+    public static void main(String[] args) throws Exception {
+
+        Scanner sc = new Scanner(System.in);
+
+        MyMath myMath = new MyMath();
+
+        int T = sc.nextInt();
+
+        while (T-- > 0) {
+
+            int condition = sc.nextInt();
+            int number = sc.nextInt();
+
+            boolean result = false;
+
+            if (condition == 1) {
+                result = myMath.checker(myMath.isOdd(), number);
+
+                if (result)
+                    System.out.println("ODD");
+                else
+                    System.out.println("EVEN");
+
+            } else if (condition == 2) {
+                result = myMath.checker(myMath.isPrime(), number);
+
+                if (result)
+                    System.out.println("PRIME");
+                else
+                    System.out.println("COMPOSITE");
+
+            } else if (condition == 3) {
+                result = myMath.checker(myMath.isPalindrome(), number);
+
+                if (result)
+                    System.out.println("PALINDROME");
+                else
+                    System.out.println("NOT PALINDROME");
+            }
+        }
+
+        sc.close();
+    }
+}
